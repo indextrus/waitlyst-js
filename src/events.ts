@@ -1,5 +1,5 @@
 import Analytics, {PageData} from 'analytics';
-import {template} from "./data/template";
+import {template} from "./template";
 import {AnalyticsEvent} from "./types";
 import axios from "axios";
 import {ErrorEventRequired, ErrorUserIdRequired} from "./exceptions";
@@ -23,7 +23,7 @@ export class EventManager {
         } else {
             this.endpoint = "https://api.waitlyst.co";
         }
-        this.url = `${this.endpoint}/v1/analytics/process/`;
+        this.url = `${this.endpoint}/v1/events/process/`;
 
     }
 
@@ -65,7 +65,7 @@ export class EventManager {
         return payload;
     }
 
-    public identify(id: string, traits: any) {
+    public identify(id: string, traits: any): Promise<any> {
         if (!id) {
             throw new ErrorUserIdRequired("You must provide an id");
         }
@@ -75,7 +75,7 @@ export class EventManager {
         })
     }
 
-    public track(event: string, properties: any) {
+    public track(event: string, properties: any): Promise<any> {
         if (!event) {
             throw new ErrorEventRequired("You must provide an event name");
         }
@@ -85,7 +85,7 @@ export class EventManager {
         })
     }
 
-    public page(properties: PageData) {
+    public page(properties: PageData): Promise<any> {
         return this.events.page(properties).then((res) => {
             const payload = this.constructPayload(res);
             return this.process(payload);
@@ -93,9 +93,6 @@ export class EventManager {
     }
 
     public process(data: any) {
-        if (this.isTest) {
-            return data;
-        }
         return axios.post(this.url, data, {
             headers: {
                 'Content-Type': 'application/json',

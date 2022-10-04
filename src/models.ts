@@ -91,17 +91,17 @@ export class Waitlyst {
     }
 
     /* Identify a user - returns a Promise */
-    public async identify(id: string, traits?: any) {
-        this.eventManager.identify(id, traits);
+    public identify(id: string, traits?: any): Promise<any> {
+        return this.eventManager.identify(id, traits);
     }
 
     /* Track an event - returns a Promise */
-    public track(event: string, properties?: any) {
-        this.eventManager.track(event, properties);
+    public track(event: string, properties?: any): Promise<any>{
+        return this.eventManager.track(event, properties);
     }
 
     /* Page event - returns a Promise */
-    public page(properties?: any) {
-        this.eventManager.page(properties);
+    public page(properties?: any): Promise<any> {
+        return this.eventManager.page(properties);
     }
 }

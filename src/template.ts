@@ -25,3 +25,5 @@ export const template: any = {
     "userId": "",
     "version": 1
 }
+
+module.exports = template;

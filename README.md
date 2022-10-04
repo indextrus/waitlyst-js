@@ -10,7 +10,7 @@
 This module is distributed via npm, which is bundled with node and should be installed as one of your project's dependencies.
 
 ```sh
-npm install waitlyst-js
+npm install @indextrus/waitlyst.js
 ```
 
 or as a script tag:
