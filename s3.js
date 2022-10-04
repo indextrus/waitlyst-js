@@ -16,7 +16,7 @@ const uploadFile = () => {
         const fileContent  = Buffer.from(data, 'binary');
         const params = {
             Bucket: 'waitlyst', // pass your bucket name
-            Key: filePath, // file will be saved as testBucket/contacts.csv
+            Key: filePath, // file will be saved as sdk/waitlyst.js
             Body: fileContent
         };
         s3.upload(params, function(s3Err, data) {
