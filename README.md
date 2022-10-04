@@ -98,7 +98,6 @@ const waitlyst = new Waitlyst('YOUR_PUBLISHABLE_KEY');
 // Jquery -> document.ready(function() { ... })
 // VanillaJS -> document.addEventListener('DOMContentLoaded', callbackFunction, false);
 
-/* Attach a feedback widget to an element */
 
 ```
 
@@ -124,7 +123,7 @@ const waitlyst = new Waitlyst('YOUR_PUBLISHABLE_KEY');
 You can attach ids to an element and manually trigger them. This is especially useful for displaying widgets in context when a user take a certain action or encounters an error in your app.
 ```html
 <button type="button" data-waitlyst="feedback" id="feedback-button">Click me</button>
-```
+``` 
 and then you can envoke it by:
 ```typescript
 const waitlyst = new Waitlyst("yourPublishableKey")
