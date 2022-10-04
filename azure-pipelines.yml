@@ -6,7 +6,7 @@
 trigger:
   branches:
     include:
-      - master
+      - main
   paths:
     exclude:
       - README.md
@@ -15,7 +15,7 @@ pr:
   autoCancel: true
   branches:
     include:
-      - master
+      - main
 
 variables:
   GIT_SHA: $(Build.SourceVersion)
