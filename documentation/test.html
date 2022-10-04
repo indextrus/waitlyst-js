@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Page</title>
+
+    <style>
+        #tooltip {
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            width: 100px;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-direction: column;
+            width: 100%;
+        }
+         button {
+            margin: 100px 500px;
+            width: 100px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Test Page</h1>
+    <p>This is a test page.</p>
+    <button id="button" aria-describedby="tooltip" data-waitlyst="feedback">I'm a button</button>
+
+
+    <button id="awef" aria-describedby="tooltip" data-waitlyst="feedback">I'm a button</button>
+
+
+    <script src="../lib/waitlyst.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitlyst = new Waitlyst("pk_live_8ed297ee-309b-4472-afa8-d5d329a580f9");
+            waitlyst.identify("test-user");
+            waitlyst.track("feedback", {
+                "feedback": "This is a test feedback"
+            });
+            waitlyst.page('test');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+node_modules
+node_modules/
+lib/
+lib
+/lib
+dist
+/dist
+dist/
+coverage
+/coverage
+.idea
+.idea/
+

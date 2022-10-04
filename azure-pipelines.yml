@@ -1,0 +1,113 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - README.md
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - master
+
+variables:
+  GIT_SHA: $(Build.SourceVersion)
+  GIT_BRANCH: $(Build.SourceBranchName)
+
+stages:
+  - stage: Testing
+    displayName: Testing application
+    jobs:
+      - job: BuildAndTest
+        displayName: Build & Test
+        pool:
+          vmImage: 'ubuntu-18.04'
+        steps:
+          - task: Npm@1
+            displayName: 'Install packages'
+            inputs:
+              command: custom
+              customCommand: install
+
+          - task: Npm@1
+            displayName: 'Run linting tests'
+            inputs:
+              command: custom
+              customCommand: run lint
+          - task: Npm@1
+            displayName: 'Run tests'
+            inputs:
+              command: custom
+              customCommand: run test
+
+  - stage: QA1
+    displayName: Deploy to QA1
+    jobs:
+      - deployment: Deploy
+        environment: qa1
+        displayName: Build and deploy to qa1
+        pool:
+          vmImage: 'ubuntu-18.04'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: NodeTool@0
+                  inputs:
+                    versionSpec: '14.16.1'
+                  displayName: 'Install Node.js'
+                - task: CmdLine@2
+                  inputs:
+                    script: chmod -R 777 ./
+                - task: Npm@1
+                  displayName: 'Install packages'
+                  inputs:
+                    command: custom
+                    customCommand: install
+                - script: |
+                      npm run build
+                      ./deploy_to_qa1.sh
+                  env:
+                      AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+
+
+  - stage: Production
+    displayName: Deploy to production
+    jobs:
+      - deployment: DeployProduction
+        environment: prod
+        displayName: deploy Web App
+        pool:
+          vmImage: 'ubuntu-18.04'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: NodeTool@0
+                  inputs:
+                    versionSpec: '14.16.1'
+                  displayName: 'Install Node.js'
+                - task: CmdLine@2
+                  inputs:
+                    script: chmod -R 777 ./
+                - task: Npm@1
+                  displayName: 'Install packages'
+                  inputs:
+                    command: custom
+                    customCommand: install
+                  env:
+                    NPM_TOKEN: $(NPM_TOKEN)
+                - script: |
+                      npm run build
+                      ./deploy_to_prod.sh
+                  env:
+                      AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
