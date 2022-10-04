@@ -1,14 +1,23 @@
 {
   "name": "waitlyst.js",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "waitlyst.js provides in-app widgets for collecting customer feedback & product analytics.",
-  "main": "index.js",
+  "main": "./dist/index",
+  "files": [
+    "dist/*.js",
+    "dist/**/&.js",
+    "dist/*.ts",
+    "dist/**/&.ts"
+  ],
   "scripts": {
     "test": "jest",
-    "build": "tsc && webpack",
+    "build": "tsc && webpack --env environment=local",
+    "build-qa1": "tsc && webpack --env environment=qa1",
+    "build-prod": "tsc && webpack --env environment=production",
     "deploy": "./deploy_to_npm.sh",
     "lint": "./node_modules/.bin/eslint .",
-    "prettier": "prettier --write '**/*.ts'"
+    "prettier": "prettier --write '**/*.ts'",
+    "upgradeWaitlyst": "npm version patch --no-git-tag-version"
   },
   "repository": {
     "type": "git",
@@ -27,6 +36,7 @@
   },
   "homepage": "https://github.com/indextrus/waitlyst-js#readme",
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "analytics": "^0.8.1",
     "axios": "^0.27.2"
   },
@@ -45,6 +55,7 @@
     "aws-sdk": "^2.1046.0",
     "babel-loader": "^8.2.3",
     "eslint": "^8.5.0",
+    "file-replace-loader": "^1.4.0",
     "jest": "^27.4.5",
     "prettier": "^2.5.1",
     "tslint": "^6.1.3",

@@ -3,6 +3,7 @@ export enum AnalyticsType {
     pageEnd = 'pageEnd',
     identifyEnd = 'identifyEnd'
 }
+
 export interface AnalyticsEvent {
     payload: {
         anonymousId: string;
@@ -25,3 +26,19 @@ export interface AnalyticsEvent {
         event?: string;
     }
 }
+
+export type Trait = {
+    [key: string]: any;
+};
+
+export enum ElementType {
+    FEEDBACK = "feedback",
+    SURVEY = "survey",
+    FORM = "form",
+}
+
+export type ElementData = {
+    id: string;
+    index: number;
+    type: ElementType;
+};

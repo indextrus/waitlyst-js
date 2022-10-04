@@ -2,20 +2,29 @@ import Analytics, {PageData} from 'analytics';
 import {template} from "./data/template";
 import {AnalyticsEvent} from "./types";
 import axios from "axios";
-import {environment} from "./environment/environment";
 import {ErrorEventRequired, ErrorUserIdRequired} from "./exceptions";
 
 export class EventManager {
-    public endpoint = environment.apiBaseUri;
-    public url = `${this.endpoint}/v1/analytics/process/`;
+    public endpoint: string;
+    public url: string;
+    private isTest: boolean;
 
     public events = Analytics({
         app: 'waitlyst',
         version: '1.0.0',
     });
 
-    constructor(private publishableKey: string) {
+    constructor(private publishableKey: string, isTest = false) {
         this.publishableKey = publishableKey;
+        this.isTest = isTest;
+
+        if (isTest) {
+            this.endpoint = "http://localhost:8000";
+        } else {
+            this.endpoint = "https://api.waitlyst.co";
+        }
+        this.url = `${this.endpoint}/v1/analytics/process/`;
+
     }
 
     /* Constructs a payload in the appropriate format */
@@ -60,7 +69,7 @@ export class EventManager {
         if (!id) {
             throw new ErrorUserIdRequired("You must provide an id");
         }
-        this.events.identify(id, traits).then((res) => {
+        return this.events.identify(id, traits).then((res) => {
             const payload = this.constructPayload(res);
             return this.process(payload);
         })
@@ -70,20 +79,23 @@ export class EventManager {
         if (!event) {
             throw new ErrorEventRequired("You must provide an event name");
         }
-        this.events.track(event, properties).then((res: AnalyticsEvent) => {
+        return this.events.track(event, properties).then((res: AnalyticsEvent) => {
             const payload = this.constructPayload(res);
             return this.process(payload);
         })
     }
 
     public page(properties: PageData) {
-        this.events.page(properties).then((res) => {
+        return this.events.page(properties).then((res) => {
             const payload = this.constructPayload(res);
             return this.process(payload);
         })
     }
 
     public process(data: any) {
+        if (this.isTest) {
+            return data;
+        }
         return axios.post(this.url, data, {
             headers: {
                 'Content-Type': 'application/json',
