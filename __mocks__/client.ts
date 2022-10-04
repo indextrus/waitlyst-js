@@ -12,9 +12,11 @@ declare global {
       HTMLElement: HTMLElement;
       HTMLDivElement: HTMLDivElement;
       Element: Element;
+      isTest: boolean;
     }
   }
 }
+
 
 const { window } = new JSDOM("", {
   url: "http://localhost/",
@@ -30,3 +32,4 @@ global.navigator = window.navigator;
 global.Element = window.Element;
 global.window.devicePixelRatio = window.devicePixelRatio;
 global.devicePixelRatio = window.devicePixelRatio;
+global.isTest = true;

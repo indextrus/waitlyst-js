@@ -26,6 +26,8 @@ describe("Testing feedback elements", () => {
 
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey);
+        waitlyst.eventManager.override = true;
+
 
         expect(waitlyst.elements.list().length).toEqual(1);
         expect(waitlyst.elements.get(elementId)).toBeInstanceOf(Element);
@@ -42,6 +44,8 @@ describe("Testing feedback elements", () => {
         // Initialize waitlyst
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey, true);
+        waitlyst.eventManager.override = true;
+
 
         expect(waitlyst.elements.list().length).toEqual(1);
         expect(() => {
@@ -60,6 +64,7 @@ describe("Testing feedback elements", () => {
         // Initialize waitlyst
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey);
+        waitlyst.eventManager.override = true;
         const element = waitlyst.elements.get(elementId);
         const container = document.getElementById(element.containerId);
         expect(container).toBeDefined();
@@ -76,6 +81,7 @@ describe("Testing feedback elements", () => {
         // Initialize waitlyst
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey);
+        waitlyst.eventManager.override = true;
         const element = waitlyst.elements.get(elementId);
         expect(element.visible).toBeFalsy();
         element.open();
@@ -96,6 +102,7 @@ describe("Testing feedback elements", () => {
 
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey);
+        waitlyst.eventManager.override = true;
         expect(document.getElementById("waitlyst-feedback-widget")).toBeDefined();
     });
 
@@ -108,6 +115,7 @@ describe("Testing feedback elements", () => {
         mockHandler.updateHtml();
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey);
+        waitlyst.eventManager.override = true;
         const elem = waitlyst.elements.get("feedback-element");
         const spinner = document.getElementById(`${elem.containerId}-spinner`);
         expect(spinner).toBeTruthy();
@@ -140,6 +148,8 @@ describe("Testing feedback elements", () => {
         mockHandler.updateHtml();
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey, true)
+        waitlyst.eventManager.override = true;
+
         waitlyst.identify("user-id");
         setTimeout(() => {
             const identity = waitlyst.getIdentity();
@@ -156,6 +166,7 @@ describe("Testing feedback elements", () => {
         mockHandler.updateHtml();
         const publishableKey = "pk_test_12345";
         const waitlyst = new Waitlyst(publishableKey, true);
+        waitlyst.eventManager.override = true;
         waitlyst.identify("user-id", {
             email: 'test@example.com'
         });

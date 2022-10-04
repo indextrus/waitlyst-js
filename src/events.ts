@@ -8,6 +8,7 @@ export class EventManager {
     public endpoint: string;
     public url: string;
     private isTest: boolean;
+    public override: boolean | undefined;
 
     public events = Analytics({
         app: 'waitlyst',
@@ -93,6 +94,9 @@ export class EventManager {
     }
 
     public process(data: any) {
+        if (this.override) {
+            return Promise.resolve(data);
+        }
         return axios.post(this.url, data, {
             headers: {
                 'Content-Type': 'application/json',

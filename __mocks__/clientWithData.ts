@@ -12,6 +12,7 @@ declare global {
       HTMLElement: HTMLElement;
       HTMLDivElement: HTMLDivElement;
       Element: Element;
+      isTest: boolean;
     }
   }
 }
@@ -38,6 +39,7 @@ export class MockHandler {
     global.Element = window.Element;
     global.window.devicePixelRatio = window.devicePixelRatio;
     global.devicePixelRatio = window.devicePixelRatio;
+    global.isTest = true;
     return global;
   }
 }
