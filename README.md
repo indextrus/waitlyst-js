@@ -6,6 +6,9 @@
 - Understand your users and how to improve your product
 - Collect in-app customer feedback with 1 line of code
 
+## Documentation
+Please visit https://waitlyst.co/docs to view the complete documentation.
+
 ## Getting Started
 This module is distributed via npm, which is bundled with node and should be installed as one of your project's dependencies.
 
