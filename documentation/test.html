@@ -39,12 +39,14 @@
     <script src="../lib/waitlyst.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const waitlyst = new Waitlyst("pk_live_8ed297ee-309b-4472-afa8-d5d329a580f9", true);
+            const waitlyst = new Waitlyst("pk_live_c93c60af-1962-468a-8782-82354a301c72", true);
             waitlyst.identify("test-user");
             waitlyst.track("feedback", {
                 "feedback": "This is a test feedback"
             });
             waitlyst.page('test');
+            waitlyst.group("test-group");
+            waitlyst.alias("test-alias");
         });
     </script>
 </body>

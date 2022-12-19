@@ -1,6 +1,5 @@
 import { JSDOM } from "jsdom";
 
-
 // Explicitly declare the global window object
 declare global {
   namespace NodeJS {
@@ -16,7 +15,6 @@ declare global {
     }
   }
 }
-
 
 const { window } = new JSDOM("", {
   url: "http://localhost/",
